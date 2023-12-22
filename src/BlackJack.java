@@ -64,6 +64,9 @@ public class BlackJack {
                 try{
                 //draw hidden card
                 Image hiddenCardImg = new ImageIcon(getClass().getResource("./cards/BACK.png")).getImage();
+                if (!stayButton.isEnabled()){
+                    hiddenCardImg = new ImageIcon(getClass().getResource(hiddenCard.getImagePath())).getImage();
+                }
                 g.drawImage(hiddenCardImg, 20, 20, cardWidth, cardHeight, null);
                //draw dealer's hand
                for (int i = 0; i < dealerHand.size(); i++){
@@ -78,8 +81,35 @@ public class BlackJack {
                 g.drawImage(cardImg, 20 + (cardWidth + 5) *i, 320, cardWidth, cardHeight, null );
                          
             }
-            
-            
+            if (!stayButton.isEnabled()) {
+                dealerSum = reduceDealerAce();
+                playerSum = reducePlayerAce();
+                System.out.println("STAY: ");
+                System.out.println(dealerSum);
+                System.out.println(playerSum);
+
+
+                String message = "";
+                if (playerSum > 21) {
+                    message = "Lost again, You Looser!";
+                }
+                else if (dealerSum > 21){
+                    message = "Got Lucky this time, You Idiot;) ;) ";
+                }
+                else if (playerSum == dealerSum ){
+                    message = "Tie! ";
+                }
+                else if (playerSum> dealerSum ){
+                    message = "Got Lucky this time, You Idiot;) ";
+                }
+                else if (dealerSum > playerSum){
+                    message = "Lost again, You Looser! ";
+                }
+               g.setFont(new Font("Arial", Font.PLAIN, 35));
+               g.setColor(Color.white);
+               g.drawString(message, 130, 220);
+
+            }                     
             } catch (Exception e){
                    e.printStackTrace();
                }
